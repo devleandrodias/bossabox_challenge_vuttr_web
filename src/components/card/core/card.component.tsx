@@ -1,11 +1,14 @@
+import { CloseIcon } from "@chakra-ui/icons";
 import { Button, Flex, Grid, Text, Tag, Link } from "@chakra-ui/react";
 
-import { CloseIcon } from "@chakra-ui/icons";
+import { ICardProps } from "../interfaces/card-props.interface";
 
-export default function Card() {
+export default function Card({
+  tool: { title, link, description, tags },
+}: ICardProps) {
   return (
     <Flex
-      height="44"
+      height="48"
       padding="4"
       display="grid"
       marginTop="10"
@@ -13,15 +16,10 @@ export default function Card() {
       backgroundColor="#FFFFFF"
       shadow="0px 5px 7px #0000000D"
     >
-      <Grid templateRows="1fr 1fr 1fr">
+      <Grid templateRows="15 auto 15">
         <Flex justifyContent="space-between">
-          <Link
-            isExternal
-            fontSize="lg"
-            color="blue.500"
-            href="https://notion.so"
-          >
-            Notion
+          <Link isExternal fontSize="lg" color="blue.500" href={`${link}`}>
+            {title}
           </Link>
           <Button
             size="xs"
@@ -32,24 +30,14 @@ export default function Card() {
           </Button>
         </Flex>
         <Flex>
-          <Text>
-            All in one tool to organize teams and ideas. Write, plan,
-            collaborate, and get organized.
-          </Text>
+          <Text>{description}</Text>
         </Flex>
-        <Flex justifyContent="flex-start">
-          <Tag size="md" marginRight="4">
-            #organization
-          </Tag>
-          <Tag size="md" marginRight="4">
-            #planning
-          </Tag>
-          <Tag size="md" marginRight="4">
-            #collaboration
-          </Tag>
-          <Tag size="md" marginRight="4">
-            #calendar
-          </Tag>
+        <Flex justifyContent="flex-start" flexWrap="wrap">
+          {tags.map((tag) => (
+            <Tag size="md" marginRight="4" marginTop="2">
+              #{tag}
+            </Tag>
+          ))}
         </Flex>
       </Grid>
     </Flex>
