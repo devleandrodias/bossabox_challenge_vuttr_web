@@ -9,11 +9,23 @@ import {
   Flex,
   Text,
   Input,
+  Modal,
   Button,
   Heading,
   Checkbox,
+  ModalBody,
   InputGroup,
+  ModalFooter,
+  ModalHeader,
+  ModalContent,
+  ModalOverlay,
+  ModalCloseButton,
   InputLeftElement,
+  FormControl,
+  useDisclosure,
+  FormLabel,
+  Textarea,
+  Spacer,
 } from "@chakra-ui/react";
 
 import { ITool } from "interfaces/tool.interface";
@@ -25,8 +37,50 @@ interface IHomeProps {
 }
 
 export default function Home({ tools }: IHomeProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Fragment>
+      <Modal
+        isCentered
+        onClose={onClose}
+        isOpen={isOpen}
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add new tool</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <form>
+              <FormControl>
+                <FormLabel>Tool Name</FormLabel>
+                <Input placeholder="tool name" />
+              </FormControl>
+              <Spacer marginY="6" />
+              <FormControl>
+                <FormLabel>Tool Link</FormLabel>
+                <Input placeholder="tool link" />
+              </FormControl>
+              <Spacer marginY="6" />
+              <FormControl>
+                <FormLabel>Tool Description</FormLabel>
+                <Textarea placeholder="tool description" />
+              </FormControl>
+              <Spacer marginY="6" />
+              <FormControl>
+                <FormLabel>Tags</FormLabel>
+                <Input placeholder="tags" />
+              </FormControl>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Add tool
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Head>
         <title>BossaBox | VUTTR</title>
         <link rel="icon" href="/favicon.ico" />
@@ -64,7 +118,11 @@ export default function Home({ tools }: IHomeProps) {
               <Checkbox marginLeft="4">search in tags only</Checkbox>
             </Flex>
             <Flex flex="1" justifyContent="flex-end">
-              <Button leftIcon={<AddIcon />} colorScheme="blue">
+              <Button
+                onClick={onOpen}
+                colorScheme="blue"
+                leftIcon={<AddIcon />}
+              >
                 add
               </Button>
             </Flex>
